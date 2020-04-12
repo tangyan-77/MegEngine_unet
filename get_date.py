@@ -1,8 +1,4 @@
-import collections.abc
 import os
-import xml.etree.ElementTree as ET
-from abc import ABC, abstractmethod
-from typing import Tuple
 import cv2
 import numpy as np
 from megengine.data.dataset.vision.meta_vision import VisionDataset
@@ -35,19 +31,6 @@ class u_data(VisionDataset):
 
             elif k == "mask":
                 mask = cv2.imread(self.masks[index], cv2.IMREAD_GRAYSCALE)
-                for i in range(mask.shape[0]):
-                    for j in range(mask.shape[1]):
-                        if mask[i][j] == 0:
-                            mask[i][j] = 0
-                        elif mask[i][j] == 80:
-                            mask[i][j] = 1
-                        elif mask[i][j] == 160:
-                            mask[i][j] = 2
-                        elif mask[i][j] == 255:
-                            mask[i][j] = 3
-                        else:
-                            mask[i][j] = 0
-
                 mask = mask[:, :, np.newaxis].astype(np.int32)
                 target.append(mask)
             else:
